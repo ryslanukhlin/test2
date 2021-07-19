@@ -1,0 +1,14 @@
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_1 = require("express");
+const searchUser_controller_1 = require("../controller/searchUser.controller");
+const user_controller_1 = require("../controller/user.controller");
+const setAvatarUser_controller_1 = require("../controller/setAvatarUser.controller");
+const authMiddelware_1 = require("../middleware/authMiddelware");
+const avatarMuddelware_1 = require("../middleware/avatarMuddelware");
+const multer_1 = require("../multer");
+const userRouter = express_1.Router();
+userRouter.get('/user', authMiddelware_1.authMiddelware, user_controller_1.getUser);
+userRouter.post('/searchUser', searchUser_controller_1.searchUserController);
+userRouter.post('/downloadIcon', authMiddelware_1.authMiddelware, multer_1.upload.single('avatar'), avatarMuddelware_1.avatarMiddelware, setAvatarUser_controller_1.setAvatarUser);
+exports.default = userRouter;
